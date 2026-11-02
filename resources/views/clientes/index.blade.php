@@ -10,6 +10,29 @@
         </a>
     </div>
 
+    {{-- Formulario de búsqueda (solo clientes) --}}
+    <form method="GET" action="{{ route('clientes.index') }}" class="mb-4">
+        <div class="row g-2">
+            <div class="col-md-6">
+                <input type="text"
+                       name="buscar"
+                       class="form-control"
+                       placeholder="Buscar por nombre o documento..."
+                       value="{{ request('buscar') }}">
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+                @if(request('buscar'))
+                    <a href="{{ route('clientes.index') }}" class="btn btn-outline-secondary">
+                        Limpiar
+                    </a>
+                @endif
+            </div>
+        </div>
+    </form>
+
     <div class="card shadow-sm">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
@@ -47,7 +70,9 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" class="text-center text-muted py-4">No hay clientes registrados.</td></tr>
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">No hay clientes registrados.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>

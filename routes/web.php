@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnvioController;
 use App\Http\Controllers\RutaController;
 use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,4 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('vehiculos', VehiculoController::class);
     Route::resource('rutas', RutaController::class);
     Route::resource('envios', EnvioController::class);
+
+    // Reportes
+    Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+    Route::get('/reportes/exportar', [ReporteController::class, 'exportar'])->name('reportes.exportar');
 });

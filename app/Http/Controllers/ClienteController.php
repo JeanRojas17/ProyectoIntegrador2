@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ClienteRequest;
 use App\Models\Cliente;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ClienteController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $clientes = Cliente::latest()->paginate(10);
+        $buscar = $request->input('buscar');
+
+        $clientes = Cliente::when($buscar, function ($query, $buscar) {
+                $query->where('nombre', 'like', "%{$buscar}%")
+                      ->orWhere('numero_documento', 'like', "%{$buscar}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('clientes.index', compact('clientes'));
     }
