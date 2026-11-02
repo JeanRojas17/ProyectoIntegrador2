@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mockup - Panel de control</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #eef1f4; margin: 0; color: #333; }
+        .nav { height: 52px; background: #444; display: flex; align-items: center; padding: 0 24px; color: #fff; gap: 24px; font-size: 14px; }
+        .nav strong { margin-right: 24px; }
+        .container { padding: 24px; }
+        .cards { display: flex; gap: 16px; flex-wrap: wrap; }
+        .card { flex: 1; min-width: 150px; background: #fff; border: 2px solid #ccc; border-radius: 8px; padding: 16px; }
+        .card .num { font-size: 30px; font-weight: bold; color: #555; }
+        .row { display: flex; gap: 16px; margin-top: 20px; }
+        .panel { flex: 1; background: #fff; border: 2px solid #ccc; border-radius: 8px; padding: 16px; min-height: 180px; }
+        .line { height: 12px; background: #eee; margin: 10px 0; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="nav"><strong>TRANSPORTES RBL</strong><span>Panel</span><span>Clientes</span><span>Conductores</span><span>Vehículos</span><span>Rutas</span><span>Envíos</span></div>
+    <div class="container">
+        <h2>Panel de control</h2>
+        <div class="cards">
+            <div class="card"><div>Clientes</div><div class="num">5</div></div>
+            <div class="card"><div>Conductores</div><div class="num">5</div></div>
+            <div class="card"><div>Vehículos</div><div class="num">5</div></div>
+            <div class="card"><div>Rutas</div><div class="num">5</div></div>
+            <div class="card"><div>Envíos</div><div class="num">8</div></div>
+        </div>
+        <div class="row">
+            <div class="panel"><strong>Envíos por estado</strong><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+            <div class="panel"><strong>Últimos envíos</strong><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mockup - Listado de clientes</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #eef1f4; margin: 0; color: #333; }
+        .nav { height: 52px; background: #444; display: flex; align-items: center; padding: 0 24px; color: #fff; gap: 24px; font-size: 14px; }
+        .container { padding: 24px; }
+        .head { display: flex; justify-content: space-between; align-items: center; }
+        .btn { background: #555; color: #fff; padding: 10px 16px; border-radius: 4px; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border: 2px solid #ccc; margin-top: 16px; }
+        th, td { border-bottom: 1px solid #ddd; padding: 12px; text-align: left; font-size: 14px; }
+        th { background: #f0f0f0; }
+        .actions span { display: inline-block; width: 28px; height: 22px; background: #ddd; border-radius: 3px; margin-right: 4px; }
+    </style>
+</head>
+<body>
+    <div class="nav"><strong>TRANSPORTES RBL</strong><span>Panel</span><span>Clientes</span><span>Conductores</span><span>Vehículos</span><span>Rutas</span><span>Envíos</span></div>
+    <div class="container">
+        <div class="head"><h2>Clientes</h2><div class="btn">+ NUEVO CLIENTE</div></div>
+        <table>
+            <thead><tr><th>Documento</th><th>Nombre / Razón social</th><th>Teléfono</th><th>Correo</th><th>Acciones</th></tr></thead>
+            <tbody>
+                <tr><td>NIT 900123456-1</td><td>Distribuidora El Progreso S.A.S.</td><td>3104567890</td><td>compras@elprogreso.com</td><td class="actions"><span></span><span></span><span></span></td></tr>
+                <tr><td>CC 1020304050</td><td>María Fernanda Gómez</td><td>3209876543</td><td>maria.gomez@correo.com</td><td class="actions"><span></span><span></span><span></span></td></tr>
+                <tr><td>NIT 901987654-2</td><td>Alimentos del Norte Ltda.</td><td>6053214567</td><td>logistica@alimentosnorte.com</td><td class="actions"><span></span><span></span><span></span></td></tr>
+                <tr><td>CC 79456123</td><td>Carlos Andrés Ramírez</td><td>3157894561</td><td>carlos.ramirez@correo.com</td><td class="actions"><span></span><span></span><span></span></td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mockup - Listado de envíos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #eef1f4; margin: 0; color: #333; }
+        .nav { height: 52px; background: #444; display: flex; align-items: center; padding: 0 24px; color: #fff; gap: 24px; font-size: 14px; }
+        .container { padding: 24px; }
+        .head { display: flex; justify-content: space-between; align-items: center; }
+        .btn { background: #555; color: #fff; padding: 10px 16px; border-radius: 4px; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border: 2px solid #ccc; margin-top: 16px; }
+        th, td { border-bottom: 1px solid #ddd; padding: 10px; text-align: left; font-size: 13px; }
+        th { background: #f0f0f0; }
+        .badge { display: inline-block; padding: 3px 8px; background: #ddd; border-radius: 10px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div class="nav"><strong>TRANSPORTES RBL</strong><span>Panel</span><span>Clientes</span><span>Conductores</span><span>Vehículos</span><span>Rutas</span><span>Envíos</span></div>
+    <div class="container">
+        <div class="head"><h2>Envíos</h2><div class="btn">+ NUEVO ENVÍO</div></div>
+        <table>
+            <thead><tr><th>Código</th><th>Fecha</th><th>Cliente</th><th>Ruta</th><th>Conductor</th><th>Vehículo</th><th>Estado</th></tr></thead>
+            <tbody>
+                <tr><td>ENV-2026-001</td><td>15/10/2026</td><td>Distribuidora El Progreso</td><td>Bogotá → Medellín</td><td>Jorge Martínez</td><td>ABC123</td><td><span class="badge">entregado</span></td></tr>
+                <tr><td>ENV-2026-002</td><td>18/10/2026</td><td>María Fernanda Gómez</td><td>Bogotá → Cali</td><td>Andrés Cárdenas</td><td>DEF456</td><td><span class="badge">en tránsito</span></td></tr>
+                <tr><td>ENV-2026-003</td><td>20/10/2026</td><td>Alimentos del Norte</td><td>Medellín → Barranquilla</td><td>Luis Torres</td><td>GHI789</td><td><span class="badge">pendiente</span></td></tr>
+                <tr><td>ENV-2026-004</td><td>22/10/2026</td><td>Carlos Andrés Ramírez</td><td>Cali → Bucaramanga</td><td>Pedro Salazar</td><td>JKL012</td><td><span class="badge">entregado</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
