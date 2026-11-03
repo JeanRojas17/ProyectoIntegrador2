@@ -31,6 +31,12 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('vehiculos.index') }}">Vehículos</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('rutas.index') }}">Rutas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('envios.index') }}">Envíos</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('reportes.*') ? 'active' : '' }}" 
+                           href="{{ route('reportes.index') }}">
+                            Reportes
+                        </a>
+                    </li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
                     <span class="text-white-50 small">{{ auth()->user()->name }}</span>

@@ -10,6 +10,43 @@
         </a>
     </div>
 
+    {{-- Filtros de búsqueda --}}
+    <form method="GET" action="{{ route('envios.index') }}" class="mb-4">
+        <div class="row g-2">
+            <div class="col-md-3">
+                <select name="estado" class="form-select">
+                    <option value="">Todos los estados</option>
+                    <option value="pendiente"   {{ request('estado') == 'pendiente'   ? 'selected' : '' }}>Pendiente</option>
+                    <option value="en_transito" {{ request('estado') == 'en_transito' ? 'selected' : '' }}>En tránsito</option>
+                    <option value="entregado"   {{ request('estado') == 'entregado'   ? 'selected' : '' }}>Entregado</option>
+                    <option value="cancelado"   {{ request('estado') == 'cancelado'   ? 'selected' : '' }}>Cancelado</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <select name="ruta_id" class="form-select">
+                    <option value="">Todas las rutas</option>
+                    @foreach($rutas as $ruta)
+                        <option value="{{ $ruta->id }}" {{ request('ruta_id') == $ruta->id ? 'selected' : '' }}>
+                            {{ $ruta->origen }} - {{ $ruta->destino }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-funnel"></i> Filtrar
+                </button>
+                @if(request('estado') || request('ruta_id'))
+                    <a href="{{ route('envios.index') }}" class="btn btn-outline-secondary">
+                        Limpiar
+                    </a>
+                @endif
+            </div>
+        </div>
+    </form>
+
     <div class="card shadow-sm">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
@@ -34,7 +71,11 @@
                             <td>{{ $envio->ruta?->origen }} → {{ $envio->ruta?->destino }}</td>
                             <td>{{ $envio->conductor?->nombres }} {{ $envio->conductor?->apellidos }}</td>
                             <td>{{ $envio->vehiculo?->placa }}</td>
-                            <td><span class="badge bg-secondary text-capitalize">{{ str_replace('_', ' ', $envio->estado) }}</span></td>
+                            <td>
+                                <span class="badge bg-secondary text-capitalize">
+                                    {{ str_replace('_', ' ', $envio->estado) }}
+                                </span>
+                            </td>
                             <td class="table-actions text-end">
                                 <a href="{{ route('envios.show', $envio) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
@@ -53,7 +94,9 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="8" class="text-center text-muted py-4">No hay envíos registrados.</td></tr>
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-4">No hay envíos registrados.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>

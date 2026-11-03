@@ -10,17 +10,27 @@ use App\Models\Ruta;
 use App\Models\Vehiculo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class EnvioController extends Controller
 {
-    public function index(): View
-    {
-        $envios = Envio::with(['cliente', 'conductor', 'vehiculo', 'ruta'])
-            ->latest()
-            ->paginate(10);
+  public function index(Request $request)
+{
+    $estado = $request->input('estado');
+    $rutaId = $request->input('ruta_id');
 
-        return view('envios.index', compact('envios'));
-    }
+    $envios = Envio::with(['cliente', 'conductor', 'vehiculo', 'ruta'])
+        ->when($estado, fn ($q, $estado) => $q->where('estado', $estado))
+        ->when($rutaId, fn ($q, $rutaId) => $q->where('ruta_id', $rutaId))
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
+
+    // Pasar las rutas para el select del filtro
+    $rutas = \App\Models\Ruta::orderBy('origen')->get();
+
+    return view('envios.index', compact('envios', 'rutas'));
+}
 
     public function create(): View
     {
