@@ -5,9 +5,11 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Vehículos</h1>
-        <a href="{{ route('vehiculos.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> Nuevo vehículo
-        </a>
+        @if (! auth()->user()->esConsulta())
+            <a href="{{ route('vehiculos.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Nuevo vehículo
+            </a>
+        @endif
     </div>
 
     <div class="card shadow-sm">
@@ -37,17 +39,19 @@
                                 <a href="{{ route('vehiculos.show', $vehiculo) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <form action="{{ route('vehiculos.destroy', $vehiculo) }}" method="POST" class="d-inline"
-                                      onsubmit="return confirm('¿Eliminar este vehículo?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
+                                @if (! auth()->user()->esConsulta())
+                                    <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('vehiculos.destroy', $vehiculo) }}" method="POST" class="d-inline"
+                                          onsubmit="return confirm('¿Eliminar este vehículo?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @empty

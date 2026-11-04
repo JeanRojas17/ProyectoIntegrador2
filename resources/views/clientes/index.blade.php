@@ -5,9 +5,11 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Clientes</h1>
-        <a href="{{ route('clientes.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> Nuevo cliente
-        </a>
+        @if (! auth()->user()->esConsulta())
+            <a href="{{ route('clientes.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Nuevo cliente
+            </a>
+        @endif
     </div>
 
     {{-- Formulario de búsqueda (solo clientes) --}}
@@ -56,17 +58,19 @@
                                 <a href="{{ route('clientes.show', $cliente) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <form action="{{ route('clientes.destroy', $cliente) }}" method="POST" class="d-inline"
-                                      onsubmit="return confirm('¿Eliminar este cliente?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
+                                @if (! auth()->user()->esConsulta())
+                                    <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('clientes.destroy', $cliente) }}" method="POST" class="d-inline"
+                                          onsubmit="return confirm('¿Eliminar este cliente?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @empty
