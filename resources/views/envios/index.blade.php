@@ -5,9 +5,11 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Envíos</h1>
-        <a href="{{ route('envios.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> Nuevo envío
-        </a>
+        @if (! auth()->user()->esConsulta())
+            <a href="{{ route('envios.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Nuevo envío
+            </a>
+        @endif
     </div>
 
     {{-- Filtros de búsqueda --}}
@@ -80,17 +82,19 @@
                                 <a href="{{ route('envios.show', $envio) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <a href="{{ route('envios.edit', $envio) }}" class="btn btn-sm btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <form action="{{ route('envios.destroy', $envio) }}" method="POST" class="d-inline"
-                                      onsubmit="return confirm('¿Eliminar este envío?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
+                                @if (! auth()->user()->esConsulta())
+                                    <a href="{{ route('envios.edit', $envio) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('envios.destroy', $envio) }}" method="POST" class="d-inline"
+                                          onsubmit="return confirm('¿Eliminar este envío?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @empty

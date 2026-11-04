@@ -6,7 +6,9 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Cliente: {{ $cliente->nombre }}</h1>
         <div class="d-flex gap-2">
-            <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
+            @if (! auth()->user()->esConsulta())
+                <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
+            @endif
             <a href="{{ route('clientes.index') }}" class="btn btn-outline-secondary">Volver</a>
         </div>
     </div>
