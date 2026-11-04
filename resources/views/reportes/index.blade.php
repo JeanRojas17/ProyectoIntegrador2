@@ -5,9 +5,47 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Reportes de Envíos</h1>
-        <a href="{{ route('reportes.exportar') }}" class="btn btn-success">
-            <i class="bi bi-download"></i> Exportar CSV
-        </a>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Exportar a PDF</h5>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('reportes.exportar') }}" method="GET" class="row g-3 align-items-end">
+                <div class="col-md-2">
+                    <label class="form-label">Estado</label>
+                    <select name="estado" class="form-select">
+                        <option value="">Todos</option>
+                        @foreach (['pendiente' => 'Pendiente', 'en_transito' => 'En tránsito', 'entregado' => 'Entregado', 'cancelado' => 'Cancelado'] as $valor => $texto)
+                            <option value="{{ $valor }}" @selected(request('estado') === $valor)>{{ $texto }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Ruta</label>
+                    <select name="ruta_id" class="form-select">
+                        <option value="">Todas</option>
+                        @foreach ($rutas as $ruta)
+                            <option value="{{ $ruta->id }}" @selected((string) request('ruta_id') === (string) $ruta->id)>{{ $ruta->origen }} → {{ $ruta->destino }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Desde</label>
+                    <input type="date" name="fecha_desde" value="{{ request('fecha_desde') }}" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Hasta</label>
+                    <input type="date" name="fecha_hasta" value="{{ request('fecha_hasta') }}" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-danger w-100">
+                        <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="row">
