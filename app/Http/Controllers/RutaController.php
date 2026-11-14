@@ -5,13 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RutaRequest;
 use App\Models\Ruta;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class RutaController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $rutas = Ruta::latest()->paginate(10);
+        $user = $request->user();
+        $buscar = $request->input('buscar');
+
+        $rutas = Ruta::query()
+            ->when($user->esConductor(), function ($query) use ($user) {
+                $query->whereHas('envios', fn ($envios) => $envios->where('conductor_id', $user->conductor?->id ?? 0));
+            })
+            ->when($buscar, function ($query, $buscar) {
+                $query->where('origen', 'like', "%{$buscar}%")
+                      ->orWhere('destino', 'like', "%{$buscar}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('rutas.index', compact('rutas'));
     }
@@ -31,7 +45,21 @@ class RutaController extends Controller
 
     public function show(Ruta $ruta): View
     {
-        $ruta->load('envios');
+        $user = auth()->user();
+
+        if ($user->esConductor()) {
+            $conductorId = $user->conductor?->id;
+
+            abort_unless(
+                $conductorId && $ruta->envios()->where('conductor_id', $conductorId)->exists(),
+                403,
+                'Solo puedes consultar las rutas de tus envíos asignados.'
+            );
+
+            $ruta->load(['envios' => fn ($envios) => $envios->where('conductor_id', $conductorId)]);
+        } else {
+            $ruta->load('envios');
+        }
 
         return view('rutas.show', compact('ruta'));
     }

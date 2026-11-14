@@ -5,13 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VehiculoRequest;
 use App\Models\Vehiculo;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class VehiculoController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $vehiculos = Vehiculo::latest()->paginate(10);
+        $buscar = $request->input('buscar');
+
+        $vehiculos = Vehiculo::when($buscar, function ($query, $buscar) {
+                $query->where('placa', 'like', "%{$buscar}%")
+                      ->orWhere('marca', 'like', "%{$buscar}%")
+                      ->orWhere('modelo', 'like', "%{$buscar}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('vehiculos.index', compact('vehiculos'));
     }

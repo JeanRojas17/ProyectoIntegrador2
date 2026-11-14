@@ -81,6 +81,8 @@ mysql -u root -p < database/script_bd.sql
 ## Documentación y mockups
 
 - Documentación técnica con normas APA: `docs/documentacion.md`
+- Documento del proyecto (estructura completa): `docs/documento_proyecto.md`
+- Cronograma de actividades por fases: `docs/cronograma.md`
 - Prototipos (SCE 2.10): `docs/mockups/index.html`
 
 ## Estructura relevante

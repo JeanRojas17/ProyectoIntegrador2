@@ -39,10 +39,6 @@
 
                         <button type="submit" class="btn btn-primary w-100">Ingresar</button>
                     </form>
-
-                    <p class="text-muted small text-center mt-3 mb-0">
-                        Usuario de prueba: <strong>admin@transportesrbl.com</strong> / <strong>password</strong>
-                    </p>
                 </div>
             </div>
         </div>

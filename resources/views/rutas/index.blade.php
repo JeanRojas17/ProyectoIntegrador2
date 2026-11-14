@@ -3,14 +3,38 @@
 @section('title', 'Rutas')
 
 @section('content')
+    @php($puedeGestionar = auth()->user()->esAdministrador())
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Rutas</h1>
-        @if (! auth()->user()->esConsulta())
+        @if ($puedeGestionar)
             <a href="{{ route('rutas.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i> Nueva ruta
             </a>
         @endif
     </div>
+
+    {{-- Formulario de búsqueda --}}
+    <form method="GET" action="{{ route('rutas.index') }}" class="mb-4">
+        <div class="row g-2">
+            <div class="col-md-6">
+                <input type="text"
+                       name="buscar"
+                       class="form-control"
+                       placeholder="Buscar por origen o destino..."
+                       value="{{ request('buscar') }}">
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+                @if(request('buscar'))
+                    <a href="{{ route('rutas.index') }}" class="btn btn-outline-secondary">
+                        Limpiar
+                    </a>
+                @endif
+            </div>
+        </div>
+    </form>
 
     <div class="card shadow-sm">
         <div class="table-responsive">
@@ -37,7 +61,7 @@
                                 <a href="{{ route('rutas.show', $ruta) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                @if (! auth()->user()->esConsulta())
+                                @if ($puedeGestionar)
                                     <a href="{{ route('rutas.edit', $ruta) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>

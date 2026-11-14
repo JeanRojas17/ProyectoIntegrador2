@@ -76,6 +76,20 @@
             </select>
             @error('ruta_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
+        <div class="col-md-6">
+            <label class="form-label">Dirección de recojo (origen)</label>
+            <input type="text" name="direccion_origen" class="form-control @error('direccion_origen') is-invalid @enderror"
+                   value="{{ old('direccion_origen', $envio->direccion_origen ?? '') }}"
+                   placeholder="Ej: Cra 54 #43-23, La Floresta, Cali" required>
+            @error('direccion_origen')<div class="invalid-feedback">{{ $message }}</div>@enderror
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Dirección de entrega (destino)</label>
+            <input type="text" name="direccion_destino" class="form-control @error('direccion_destino') is-invalid @enderror"
+                   value="{{ old('direccion_destino', $envio->direccion_destino ?? '') }}"
+                   placeholder="Ej: Calle 5 #12-34, El Granada, Cali" required>
+            @error('direccion_destino')<div class="invalid-feedback">{{ $message }}</div>@enderror
+        </div>
         <div class="col-12">
             <label class="form-label">Descripción de la carga</label>
             <textarea name="descripcion_carga" rows="3" class="form-control @error('descripcion_carga') is-invalid @enderror" required>{{ old('descripcion_carga', $envio->descripcion_carga ?? '') }}</textarea>

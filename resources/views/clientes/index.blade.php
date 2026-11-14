@@ -3,9 +3,10 @@
 @section('title', 'Clientes')
 
 @section('content')
+    @php($puedeGestionar = auth()->user()->esAdministrador())
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Clientes</h1>
-        @if (! auth()->user()->esConsulta())
+        @if ($puedeGestionar)
             <a href="{{ route('clientes.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i> Nuevo cliente
             </a>
@@ -58,7 +59,7 @@
                                 <a href="{{ route('clientes.show', $cliente) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                @if (! auth()->user()->esConsulta())
+                                @if ($puedeGestionar)
                                     <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>

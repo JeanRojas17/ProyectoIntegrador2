@@ -5,13 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ConductorRequest;
 use App\Models\Conductor;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ConductorController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $conductores = Conductor::latest()->paginate(10);
+        $buscar = $request->input('buscar');
+
+        $conductores = Conductor::when($buscar, function ($query, $buscar) {
+                $query->where('nombres', 'like', "%{$buscar}%")
+                      ->orWhere('apellidos', 'like', "%{$buscar}%")
+                      ->orWhere('numero_documento', 'like', "%{$buscar}%")
+                      ->orWhere('numero_licencia', 'like', "%{$buscar}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('conductores.index', compact('conductores'));
     }

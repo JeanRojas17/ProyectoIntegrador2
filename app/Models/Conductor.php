@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Conductor extends Model
@@ -13,6 +14,7 @@ class Conductor extends Model
     protected $table = 'conductores';
 
     protected $fillable = [
+        'user_id',
         'tipo_documento',
         'numero_documento',
         'nombres',
@@ -27,6 +29,11 @@ class Conductor extends Model
     protected $casts = [
         'fecha_vencimiento_licencia' => 'date',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function envios(): HasMany
     {

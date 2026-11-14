@@ -9,4 +9,6 @@
             @include('rutas._form', ['ruta' => $ruta])
         </div>
     </div>
+
+    @include('mimaparbl._mapa_rutas')
 @endsection
