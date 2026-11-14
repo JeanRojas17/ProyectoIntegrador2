@@ -18,6 +18,8 @@ class Envio extends Model
         'conductor_id',
         'vehiculo_id',
         'ruta_id',
+        'direccion_origen',
+        'direccion_destino',
         'fecha_envio',
         'descripcion_carga',
         'peso_kg',
