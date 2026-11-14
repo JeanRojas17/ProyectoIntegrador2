@@ -3,10 +3,11 @@
 @section('title', 'Detalle del envío')
 
 @section('content')
+    @php($usuario = auth()->user())
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Envío: {{ $envio->codigo }}</h1>
         <div class="d-flex gap-2">
-            @if (! auth()->user()->esConsulta())
+            @if ($usuario->esAdministrador())
                 <a href="{{ route('envios.edit', $envio) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
             @endif
             <a href="{{ route('envios.index') }}" class="btn btn-outline-secondary">Volver</a>
@@ -28,6 +29,12 @@
                         <dt class="col-sm-4">Estado</dt>
                         <dd class="col-sm-8 text-capitalize">{{ str_replace('_', ' ', $envio->estado) }}</dd>
 
+                        <dt class="col-sm-4">Dirección de recojo</dt>
+                        <dd class="col-sm-8">{{ $envio->direccion_origen ?? '—' }}</dd>
+
+                        <dt class="col-sm-4">Dirección de entrega</dt>
+                        <dd class="col-sm-8">{{ $envio->direccion_destino ?? '—' }}</dd>
+
                         <dt class="col-sm-4">Peso</dt>
                         <dd class="col-sm-8">{{ number_format($envio->peso_kg, 2) }} kg</dd>
 
@@ -48,30 +55,73 @@
                     <dl class="row mb-0">
                         <dt class="col-sm-4">Cliente</dt>
                         <dd class="col-sm-8">
-                            <a href="{{ route('clientes.show', $envio->cliente) }}">{{ $envio->cliente?->nombre }}</a>
+                            @if ($usuario->esAdministrador() || $usuario->esConsulta())
+                                <a href="{{ route('clientes.show', $envio->cliente) }}">{{ $envio->cliente?->nombre }}</a>
+                            @else
+                                {{ $envio->cliente?->nombre }}
+                            @endif
                         </dd>
 
                         <dt class="col-sm-4">Conductor</dt>
                         <dd class="col-sm-8">
-                            <a href="{{ route('conductores.show', $envio->conductor) }}">
+                            @if ($usuario->esAdministrador() || $usuario->esConsulta())
+                                <a href="{{ route('conductores.show', $envio->conductor) }}">
+                                    {{ $envio->conductor?->nombres }} {{ $envio->conductor?->apellidos }}
+                                </a>
+                            @else
                                 {{ $envio->conductor?->nombres }} {{ $envio->conductor?->apellidos }}
-                            </a>
+                            @endif
                         </dd>
 
                         <dt class="col-sm-4">Vehículo</dt>
                         <dd class="col-sm-8">
-                            <a href="{{ route('vehiculos.show', $envio->vehiculo) }}">{{ $envio->vehiculo?->placa }}</a>
+                            @if ($usuario->esAdministrador() || $usuario->esConsulta())
+                                <a href="{{ route('vehiculos.show', $envio->vehiculo) }}">{{ $envio->vehiculo?->placa }}</a>
+                            @else
+                                {{ $envio->vehiculo?->placa }}
+                            @endif
                         </dd>
 
                         <dt class="col-sm-4">Ruta</dt>
                         <dd class="col-sm-8">
-                            <a href="{{ route('rutas.show', $envio->ruta) }}">
+                            @if ($usuario->esAdministrador() || $usuario->esConsulta())
+                                <a href="{{ route('rutas.show', $envio->ruta) }}">
+                                    {{ $envio->ruta?->origen }} → {{ $envio->ruta?->destino }}
+                                </a>
+                            @else
                                 {{ $envio->ruta?->origen }} → {{ $envio->ruta?->destino }}
-                            </a>
+                            @endif
                         </dd>
                     </dl>
                 </div>
             </div>
         </div>
     </div>
+
+    @if ($usuario->esConductor() || $usuario->esAdministrador())
+        <div class="card shadow-sm mt-3">
+            <div class="card-header bg-white fw-semibold">Actualizar estado</div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('envios.estado', $envio) }}" class="row g-2 align-items-end">
+                    @csrf
+                    @method('PATCH')
+                    <div class="col-md-4">
+                        <label for="estado" class="form-label">Nuevo estado</label>
+                        <select name="estado" id="estado" class="form-select" required>
+                            @foreach (['pendiente', 'en_transito', 'entregado', 'cancelado'] as $opcion)
+                                <option value="{{ $opcion }}" {{ $envio->estado === $opcion ? 'selected' : '' }}>
+                                    {{ ucfirst(str_replace('_', ' ', $opcion)) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-auto">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check2-circle"></i> Guardar estado
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
 @endsection

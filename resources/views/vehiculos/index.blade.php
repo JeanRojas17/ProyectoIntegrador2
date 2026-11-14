@@ -3,14 +3,38 @@
 @section('title', 'Vehículos')
 
 @section('content')
+    @php($puedeGestionar = auth()->user()->esAdministrador())
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Vehículos</h1>
-        @if (! auth()->user()->esConsulta())
+        @if ($puedeGestionar)
             <a href="{{ route('vehiculos.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i> Nuevo vehículo
             </a>
         @endif
     </div>
+
+    {{-- Formulario de búsqueda --}}
+    <form method="GET" action="{{ route('vehiculos.index') }}" class="mb-4">
+        <div class="row g-2">
+            <div class="col-md-6">
+                <input type="text"
+                       name="buscar"
+                       class="form-control"
+                       placeholder="Buscar por placa, marca o modelo..."
+                       value="{{ request('buscar') }}">
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+                @if(request('buscar'))
+                    <a href="{{ route('vehiculos.index') }}" class="btn btn-outline-secondary">
+                        Limpiar
+                    </a>
+                @endif
+            </div>
+        </div>
+    </form>
 
     <div class="card shadow-sm">
         <div class="table-responsive">
@@ -39,7 +63,7 @@
                                 <a href="{{ route('vehiculos.show', $vehiculo) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                @if (! auth()->user()->esConsulta())
+                                @if ($puedeGestionar)
                                     <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>

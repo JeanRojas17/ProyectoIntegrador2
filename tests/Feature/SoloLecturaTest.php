@@ -39,7 +39,7 @@ class SoloLecturaTest extends TestCase
 
     public function test_administrador_conserva_acceso_a_crear_y_editar(): void
     {
-        $admin = User::factory()->create(['rol' => 'admin']);
+        $admin = User::factory()->create(['rol' => 'administrador']);
         $cliente = Cliente::create([
             'tipo_documento' => 'CC',
             'numero_documento' => '654321',

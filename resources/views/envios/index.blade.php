@@ -3,9 +3,10 @@
 @section('title', 'Envíos')
 
 @section('content')
+    @php($puedeGestionar = auth()->user()->esAdministrador())
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Envíos</h1>
-        @if (! auth()->user()->esConsulta())
+        @if ($puedeGestionar)
             <a href="{{ route('envios.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i> Nuevo envío
             </a>
@@ -16,6 +17,14 @@
     <form method="GET" action="{{ route('envios.index') }}" class="mb-4">
         <div class="row g-2">
             <div class="col-md-3">
+                <input type="text"
+                       name="buscar"
+                       class="form-control"
+                       placeholder="Buscar por código o cliente..."
+                       value="{{ request('buscar') }}">
+            </div>
+
+            <div class="col-md-3">
                 <select name="estado" class="form-select">
                     <option value="">Todos los estados</option>
                     <option value="pendiente"   {{ request('estado') == 'pendiente'   ? 'selected' : '' }}>Pendiente</option>
@@ -25,7 +34,7 @@
                 </select>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <select name="ruta_id" class="form-select">
                     <option value="">Todas las rutas</option>
                     @foreach($rutas as $ruta)
@@ -40,7 +49,7 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-funnel"></i> Filtrar
                 </button>
-                @if(request('estado') || request('ruta_id'))
+                @if(request('estado') || request('ruta_id') || request('buscar'))
                     <a href="{{ route('envios.index') }}" class="btn btn-outline-secondary">
                         Limpiar
                     </a>
@@ -82,7 +91,7 @@
                                 <a href="{{ route('envios.show', $envio) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                @if (! auth()->user()->esConsulta())
+                                @if ($puedeGestionar)
                                     <a href="{{ route('envios.edit', $envio) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>

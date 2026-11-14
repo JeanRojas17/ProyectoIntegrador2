@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Vehículo: {{ $vehiculo->placa }}</h1>
         <div class="d-flex gap-2">
-            @if (! auth()->user()->esConsulta())
+            @if (auth()->user()->esAdministrador())
                 <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
             @endif
             <a href="{{ route('vehiculos.index') }}" class="btn btn-outline-secondary">Volver</a>
