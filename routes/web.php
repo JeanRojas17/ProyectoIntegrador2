@@ -10,6 +10,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RutaController;
 use App\Http\Controllers\VehiculoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -60,7 +61,14 @@ Route::middleware(['auth', 'solo.lectura'])->group(function () {
         Route::get('envios/{envio}/edit', [EnvioController::class, 'edit'])->whereNumber('envio')->name('envios.edit');
         Route::put('envios/{envio}', [EnvioController::class, 'update'])->whereNumber('envio')->name('envios.update');
         Route::delete('envios/{envio}', [EnvioController::class, 'destroy'])->whereNumber('envio')->name('envios.destroy');
-    });
+
+        Route::get('usuarios', [UserController::class, 'index'])->name('usuarios.index');
+        Route::get('usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
+        Route::post('usuarios', [UserController::class, 'store'])->name('usuarios.store');
+        Route::get('usuarios/{usuario}/edit', [UserController::class, 'edit'])->name('usuarios.edit');
+        Route::put('usuarios/{usuario}', [UserController::class, 'update'])->name('usuarios.update');
+        Route::delete('usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy');
+        });
 
     // -----------------------------------------------------------------
     // Lectura general: administrador y usuario de consulta

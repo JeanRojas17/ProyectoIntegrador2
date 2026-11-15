@@ -2,76 +2,163 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClienteRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\Cliente;
+use App\Models\Conductor;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-     public function index(): View
+    public function index(Request $request): View
     {
-        $clientes = Cliente::latest()->paginate(10);
+        $buscar = $request->input('buscar');
 
-        return view('clientes.index', compact('clientes'));
+        $usuarios = User::with(['conductor', 'cliente'])
+            ->when($buscar, function ($query, $buscar) {
+                $query->where(function ($q) use ($buscar) {
+                    $q->where('name', 'like', "%{$buscar}%")
+                      ->orWhere('email', 'like', "%{$buscar}%");
+                });
+            })
+            ->orderBy('name')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('usuarios.index', compact('usuarios'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-     public function create(): View
+    public function create(): View
     {
-        return view('clientes.create');
-        hash::make($request->password);
+        return view('usuarios.create', [
+            'usuario' => null,
+            'conductores' => $this->conductoresDisponibles(),
+            'clientes' => $this->clientesDisponibles(),
+            'roles' => $this->roles(),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-   public function store(ClienteRequest $request): RedirectResponse
+    public function store(UserRequest $request): RedirectResponse
     {
-        Cliente::create($request->validated());
+        DB::transaction(function () use ($request) {
+            $data = $request->validated();
 
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente registrado correctamente.');
+            $usuario = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'rol' => $data['rol'],
+            ]);
+
+            $this->vincular($usuario, $data);
+        });
+
+        return redirect()->route('usuarios.index')
+            ->with('success', 'Usuario creado correctamente.');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(User $usuario): View
     {
-        //
+        return view('usuarios.edit', [
+            'usuario' => $usuario,
+            'conductores' => $this->conductoresDisponibles($usuario),
+            'clientes' => $this->clientesDisponibles($usuario),
+            'roles' => $this->roles(),
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cliente $cliente): View
+    public function update(UserRequest $request, User $usuario): RedirectResponse
     {
-        return view('clientes.edit', compact('cliente'));
-        hash::make($request->password);
+        DB::transaction(function () use ($request, $usuario) {
+            $data = $request->validated();
+
+            $usuario->name = $data['name'];
+            $usuario->email = $data['email'];
+            $usuario->rol = $data['rol'];
+
+            if (! empty($data['password'])) {
+                $usuario->password = $data['password'];
+            }
+
+            $usuario->save();
+
+            $this->desvincular($usuario);
+            $this->vincular($usuario, $data);
+        });
+
+        return redirect()->route('usuarios.index')
+            ->with('success', 'Usuario actualizado correctamente.');
     }
 
-    public function update(ClienteRequest $request, Cliente $cliente): RedirectResponse
+    public function destroy(Request $request, User $usuario): RedirectResponse
     {
-        $cliente->update($request->validated());
+        if ($usuario->is($request->user())) {
+            return back()->withErrors([
+                'usuario' => 'No puedes eliminar tu propio usuario.',
+            ]);
+        }
 
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente actualizado correctamente.');
+        $usuario->delete();
+
+        return redirect()->route('usuarios.index')
+            ->with('success', 'Usuario eliminado correctamente.');
     }
 
-    public function destroy(Cliente $cliente): RedirectResponse
+    private function vincular(User $usuario, array $data): void
     {
-        $cliente->delete();
+        if ($data['rol'] === User::ROL_CONDUCTOR && ! empty($data['conductor_id'])) {
+            Conductor::whereKey($data['conductor_id'])->update(['user_id' => $usuario->id]);
+        }
 
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente eliminado correctamente.');
+        if ($data['rol'] === User::ROL_CLIENTE && ! empty($data['cliente_id'])) {
+            Cliente::whereKey($data['cliente_id'])->update(['user_id' => $usuario->id]);
+        }
+    }
+
+    private function desvincular(User $usuario): void
+    {
+        Conductor::where('user_id', $usuario->id)->update(['user_id' => null]);
+        Cliente::where('user_id', $usuario->id)->update(['user_id' => null]);
+    }
+
+    private function conductoresDisponibles(?User $usuario = null): Collection
+    {
+        return Conductor::where(function ($query) use ($usuario) {
+                $query->whereNull('user_id');
+
+                if ($usuario) {
+                    $query->orWhere('user_id', $usuario->id);
+                }
+            })
+            ->orderBy('nombres')
+            ->get();
+    }
+
+    private function clientesDisponibles(?User $usuario = null): Collection
+    {
+        return Cliente::where(function ($query) use ($usuario) {
+                $query->whereNull('user_id');
+
+                if ($usuario) {
+                    $query->orWhere('user_id', $usuario->id);
+                }
+            })
+            ->orderBy('nombre')
+            ->get();
+    }
+
+    private function roles(): array
+    {
+        return [
+            User::ROL_ADMINISTRADOR => 'Administrador',
+            User::ROL_CONDUCTOR => 'Conductor',
+            User::ROL_CLIENTE => 'Cliente',
+            User::ROL_AUXILIAR => 'Auxiliar',
+            User::ROL_CONSULTA => 'Consulta',
+        ];
     }
 }
