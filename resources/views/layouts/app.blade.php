@@ -134,6 +134,15 @@
                         </a>
                     </li>
                 @endif
+                @if ($usuario->esAdministrador())
+              <li class="nav-item">
+                  <a class="nav-link {{ request()->routeIs('usuarios.*') ? 'active' : '' }}"
+                   href="{{ route('usuarios.index') }}">
+                   <i class="bi bi-person-gear"></i> Usuarios
+                   </a>
+              </li>
+            @endif
+
             </ul>
 
             <div class="mt-auto pt-3 border-top border-secondary">
