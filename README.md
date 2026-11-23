@@ -67,7 +67,7 @@ Abre http://localhost:8000
 | `clientes` | Documento, nombre/razón social, teléfono, correo y dirección |
 | `conductores` | Documento, nombres, licencia, categoría, vencimiento y estado |
 | `vehiculos` | Placa, marca, modelo, año, tipo, capacidad y estado |
-| `rutas` | Origen, destino, distancia, tiempo estimado y tarifa base |
+| `rutas` | Origen, destino, distancia y tiempo estimado |
 | `envios` | Código, FKs, fecha, carga, peso, valor declarado y estado |
 
 ## Script de base de datos

@@ -18,7 +18,6 @@ class RutaRequest extends FormRequest
             'destino' => ['required', 'string', 'max:100', 'different:origen'],
             'distancia_km' => ['required', 'numeric', 'min:0.01'],
             'tiempo_estimado_horas' => ['nullable', 'numeric', 'min:0.01'],
-            'tarifa_base' => ['required', 'numeric', 'min:0'],
         ];
     }
 
@@ -38,7 +37,6 @@ class RutaRequest extends FormRequest
             'destino' => 'destino',
             'distancia_km' => 'distancia (km)',
             'tiempo_estimado_horas' => 'tiempo estimado (horas)',
-            'tarifa_base' => 'tarifa base',
         ];
     }
 }

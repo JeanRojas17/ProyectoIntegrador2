@@ -17,7 +17,6 @@ class Ruta extends Model
         'destino',
         'distancia_km',
         'tiempo_estimado_horas',
-        'tarifa_base',
     ];
 
     public function envios(): HasMany

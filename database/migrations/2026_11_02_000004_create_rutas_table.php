@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('destino', 100);
             $table->decimal('distancia_km', 10, 2);
             $table->decimal('tiempo_estimado_horas', 8, 2)->nullable();
-            $table->decimal('tarifa_base', 12, 2);
             $table->timestamps();
         });
     }

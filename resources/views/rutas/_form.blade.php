@@ -32,12 +32,6 @@
                    value="{{ old('tiempo_estimado_horas', $ruta->tiempo_estimado_horas ?? '') }}">
             @error('tiempo_estimado_horas')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
-        <div class="col-md-4">
-            <label class="form-label">Tarifa base</label>
-            <input type="number" step="0.01" name="tarifa_base" class="form-control @error('tarifa_base') is-invalid @enderror"
-                   value="{{ old('tarifa_base', $ruta->tarifa_base ?? '') }}" required>
-            @error('tarifa_base')<div class="invalid-feedback">{{ $message }}</div>@enderror
-        </div>
     </div>
 
     <div class="mt-4 d-flex gap-2">

@@ -45,7 +45,6 @@
                         <th>Destino</th>
                         <th>Distancia (km)</th>
                         <th>Tiempo estimado (h)</th>
-                        <th>Tarifa base</th>
                         <th class="table-actions text-end">Acciones</th>
                     </tr>
                 </thead>
@@ -56,7 +55,6 @@
                             <td>{{ $ruta->destino }}</td>
                             <td>{{ number_format($ruta->distancia_km, 2) }}</td>
                             <td>{{ $ruta->tiempo_estimado_horas ?? '—' }}</td>
-                            <td>${{ number_format($ruta->tarifa_base, 2) }}</td>
                             <td class="table-actions text-end">
                                 <a href="{{ route('rutas.show', $ruta) }}" class="btn btn-sm btn-outline-secondary" title="Ver">
                                     <i class="bi bi-eye"></i>
@@ -77,7 +75,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="6" class="text-center text-muted py-4">No hay rutas registradas.</td></tr>
+                        <tr><td colspan="5" class="text-center text-muted py-4">No hay rutas registradas.</td></tr>
                     @endforelse
                 </tbody>
             </table>
