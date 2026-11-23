@@ -28,8 +28,6 @@
                 <dt class="col-sm-3">Tiempo estimado</dt>
                 <dd class="col-sm-9">{{ $ruta->tiempo_estimado_horas ? $ruta->tiempo_estimado_horas . ' horas' : '—' }}</dd>
 
-                <dt class="col-sm-3">Tarifa base</dt>
-                <dd class="col-sm-9">${{ number_format($ruta->tarifa_base, 2) }}</dd>
             </dl>
         </div>
     </div>

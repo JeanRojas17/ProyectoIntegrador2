@@ -76,11 +76,11 @@ class DatabaseSeeder extends Seeder
         ])->map(fn (array $data) => Vehiculo::create($data));
 
         $rutas = collect([
-            ['origen' => 'Bogotá', 'destino' => 'Medellín', 'distancia_km' => 415, 'tiempo_estimado_horas' => 8.5, 'tarifa_base' => 850000],
-            ['origen' => 'Bogotá', 'destino' => 'Cali', 'distancia_km' => 460, 'tiempo_estimado_horas' => 9.0, 'tarifa_base' => 920000],
-            ['origen' => 'Medellín', 'destino' => 'Barranquilla', 'distancia_km' => 700, 'tiempo_estimado_horas' => 13.0, 'tarifa_base' => 1350000],
-            ['origen' => 'Cali', 'destino' => 'Bucaramanga', 'distancia_km' => 780, 'tiempo_estimado_horas' => 15.0, 'tarifa_base' => 1480000],
-            ['origen' => 'Barranquilla', 'destino' => 'Cartagena', 'distancia_km' => 120, 'tiempo_estimado_horas' => 2.5, 'tarifa_base' => 320000],
+            ['origen' => 'Bogotá', 'destino' => 'Medellín', 'distancia_km' => 415, 'tiempo_estimado_horas' => 8.5],
+            ['origen' => 'Bogotá', 'destino' => 'Cali', 'distancia_km' => 460, 'tiempo_estimado_horas' => 9.0],
+            ['origen' => 'Medellín', 'destino' => 'Barranquilla', 'distancia_km' => 700, 'tiempo_estimado_horas' => 13.0],
+            ['origen' => 'Cali', 'destino' => 'Bucaramanga', 'distancia_km' => 780, 'tiempo_estimado_horas' => 15.0],
+            ['origen' => 'Barranquilla', 'destino' => 'Cartagena', 'distancia_km' => 120, 'tiempo_estimado_horas' => 2.5],
         ])->map(fn (array $data) => Ruta::create($data));
 
         $envios = [

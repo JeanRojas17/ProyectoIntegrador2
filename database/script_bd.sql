@@ -232,7 +232,6 @@ CREATE TABLE `rutas` (
   `destino` varchar(100) NOT NULL,
   `distancia_km` decimal(10,2) NOT NULL,
   `tiempo_estimado_horas` decimal(8,2) DEFAULT NULL,
-  `tarifa_base` decimal(12,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -241,7 +240,7 @@ CREATE TABLE `rutas` (
 
 LOCK TABLES `rutas` WRITE;
 /*!40000 ALTER TABLE `rutas` DISABLE KEYS */;
-INSERT INTO `rutas` VALUES (1,'Bogotá','Medellín',415.00,8.50,850000.00,'2026-11-03 00:40:52','2026-11-03 00:40:52'),(2,'Bogotá','Cali',460.00,9.00,920000.00,'2026-11-03 00:40:52','2026-11-03 00:40:52'),(3,'Medellín','Barranquilla',700.00,13.00,1350000.00,'2026-11-03 00:40:52','2026-11-03 00:40:52'),(4,'Cali','Bucaramanga',780.00,15.00,1480000.00,'2026-11-03 00:40:52','2026-11-03 00:40:52'),(5,'Barranquilla','Cartagena',120.00,2.50,320000.00,'2026-11-03 00:40:52','2026-11-03 00:40:52');
+INSERT INTO `rutas` VALUES (1,'Bogotá','Medellín',415.00,8.50,'2026-11-03 00:40:52','2026-11-03 00:40:52'),(2,'Bogotá','Cali',460.00,9.00,'2026-11-03 00:40:52','2026-11-03 00:40:52'),(3,'Medellín','Barranquilla',700.00,13.00,'2026-11-03 00:40:52','2026-11-03 00:40:52'),(4,'Cali','Bucaramanga',780.00,15.00,'2026-11-03 00:40:52','2026-11-03 00:40:52'),(5,'Barranquilla','Cartagena',120.00,2.50,'2026-11-03 00:40:52','2026-11-03 00:40:52');
 /*!40000 ALTER TABLE `rutas` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `sessions`;
