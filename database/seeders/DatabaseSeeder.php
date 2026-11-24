@@ -68,11 +68,11 @@ class DatabaseSeeder extends Seeder
         $conductores->first()->update(['user_id' => $conductorUser->id]);
 
         $vehiculos = collect([
-            ['placa' => 'ABC123', 'marca' => 'Chevrolet', 'modelo' => 'NPR', 'anio' => 2021, 'tipo_vehiculo' => 'Camión', 'capacidad_carga' => 4500, 'estado' => 'disponible'],
-            ['placa' => 'DEF456', 'marca' => 'Hino', 'modelo' => 'Dutro', 'anio' => 2022, 'tipo_vehiculo' => 'Camión', 'capacidad_carga' => 6000, 'estado' => 'en_ruta'],
-            ['placa' => 'GHI789', 'marca' => 'Renault', 'modelo' => 'Kangoo', 'anio' => 2020, 'tipo_vehiculo' => 'Furgón', 'capacidad_carga' => 1500, 'estado' => 'mantenimiento'],
-            ['placa' => 'JKL012', 'marca' => 'Mercedes-Benz', 'modelo' => 'Accelo', 'anio' => 2023, 'tipo_vehiculo' => 'Camión', 'capacidad_carga' => 8000, 'estado' => 'disponible'],
-            ['placa' => 'MNO345', 'marca' => 'Toyota', 'modelo' => 'Hilux', 'anio' => 2019, 'tipo_vehiculo' => 'Camioneta', 'capacidad_carga' => 1000, 'estado' => 'inactivo'],
+            ['placa' => 'ABC123', 'marca' => 'Chevrolet', 'modelo' => 'NPR', 'anio' => 2021, 'tipo_vehiculo' => 'Camión', 'capacidad_carga' => 18.00, 'estado' => 'disponible'],
+            ['placa' => 'DEF456', 'marca' => 'Hino', 'modelo' => 'Dutro', 'anio' => 2022, 'tipo_vehiculo' => 'Camión', 'capacidad_carga' => 24.00, 'estado' => 'en_ruta'],
+            ['placa' => 'GHI789', 'marca' => 'Renault', 'modelo' => 'Kangoo', 'anio' => 2020, 'tipo_vehiculo' => 'Furgón', 'capacidad_carga' => 3.50, 'estado' => 'mantenimiento'],
+            ['placa' => 'JKL012', 'marca' => 'Mercedes-Benz', 'modelo' => 'Accelo', 'anio' => 2023, 'tipo_vehiculo' => 'Camión', 'capacidad_carga' => 30.00, 'estado' => 'disponible'],
+            ['placa' => 'MNO345', 'marca' => 'Toyota', 'modelo' => 'Hilux', 'anio' => 2019, 'tipo_vehiculo' => 'Camioneta', 'capacidad_carga' => 2.00, 'estado' => 'inactivo'],
         ])->map(fn (array $data) => Vehiculo::create($data));
 
         $rutas = collect([
@@ -84,14 +84,14 @@ class DatabaseSeeder extends Seeder
         ])->map(fn (array $data) => Ruta::create($data));
 
         $envios = [
-            ['codigo' => 'ENV-2026-001', 'fecha_envio' => '2026-10-15', 'direccion_origen' => 'Calle 45 # 12-30, Bogotá', 'direccion_destino' => 'Carrera 8 # 20-15, Medellín', 'descripcion_carga' => 'Cajas de alimentos no perecederos', 'peso_kg' => 3200, 'valor_declarado' => 4500000, 'estado' => 'entregado'],
-            ['codigo' => 'ENV-2026-002', 'fecha_envio' => '2026-10-18', 'direccion_origen' => 'Avenida Calle 26 # 30-15, Bogotá', 'direccion_destino' => 'Avenida 6N # 23-45, Cali', 'descripcion_carga' => 'Electrodomésticos', 'peso_kg' => 1800, 'valor_declarado' => 7800000, 'estado' => 'en_transito'],
-            ['codigo' => 'ENV-2026-003', 'fecha_envio' => '2026-10-20', 'direccion_origen' => 'Carrera 70 # 45-12, Medellín', 'direccion_destino' => 'Vía 40 # 65-10, Barranquilla', 'descripcion_carga' => 'Materiales de ferretería', 'peso_kg' => 5400, 'valor_declarado' => 3200000, 'estado' => 'pendiente'],
-            ['codigo' => 'ENV-2026-004', 'fecha_envio' => '2026-10-22', 'direccion_origen' => 'Calle 5 # 12-34, Cali', 'direccion_destino' => 'Carrera 27 # 18-09, Bucaramanga', 'descripcion_carga' => 'Productos de aseo', 'peso_kg' => 950, 'valor_declarado' => 1200000, 'estado' => 'entregado'],
-            ['codigo' => 'ENV-2026-005', 'fecha_envio' => '2026-10-25', 'direccion_origen' => 'Vía 40 # 65-10, Barranquilla', 'direccion_destino' => 'Bocagrande, Cartagena', 'descripcion_carga' => 'Repuestos automotrices', 'peso_kg' => 2100, 'valor_declarado' => 5600000, 'estado' => 'en_transito'],
-            ['codigo' => 'ENV-2026-006', 'fecha_envio' => '2026-10-28', 'direccion_origen' => 'Calle 100 # 15-32, Bogotá', 'direccion_destino' => 'Carrera 43A # 10-25, Medellín', 'descripcion_carga' => 'Muebles de oficina', 'peso_kg' => 1400, 'valor_declarado' => 2900000, 'estado' => 'cancelado'],
-            ['codigo' => 'ENV-2026-007', 'fecha_envio' => '2026-11-01', 'direccion_origen' => 'Carrera 7 # 63-44, Bogotá', 'direccion_destino' => 'Calle 34 # 6-22, Cali', 'descripcion_carga' => 'Textiles y confecciones', 'peso_kg' => 700, 'valor_declarado' => 1800000, 'estado' => 'pendiente'],
-            ['codigo' => 'ENV-2026-008', 'fecha_envio' => '2026-11-02', 'direccion_origen' => 'Calle 30 # 55-10, Medellín', 'direccion_destino' => 'Carrera 21 # 45-8, Barranquilla', 'descripcion_carga' => 'Bebidas embotelladas', 'peso_kg' => 4100, 'valor_declarado' => 2300000, 'estado' => 'en_transito'],
+            ['codigo' => 'ENV-2026-001', 'fecha_envio' => '2026-10-15', 'direccion_origen' => 'Calle 45 # 12-30, Bogotá', 'direccion_destino' => 'Carrera 8 # 20-15, Medellín', 'descripcion_carga' => 'Cajas de alimentos no perecederos', 'peso_kg' => 3200, 'volumen_m3' => 12.00, 'valor_declarado' => 4500000, 'estado' => 'entregado'],
+            ['codigo' => 'ENV-2026-002', 'fecha_envio' => '2026-10-18', 'direccion_origen' => 'Avenida Calle 26 # 30-15, Bogotá', 'direccion_destino' => 'Avenida 6N # 23-45, Cali', 'descripcion_carga' => 'Electrodomésticos', 'peso_kg' => 1800, 'volumen_m3' => 8.00, 'valor_declarado' => 7800000, 'estado' => 'en_transito'],
+            ['codigo' => 'ENV-2026-003', 'fecha_envio' => '2026-10-20', 'direccion_origen' => 'Carrera 70 # 45-12, Medellín', 'direccion_destino' => 'Vía 40 # 65-10, Barranquilla', 'descripcion_carga' => 'Materiales de ferretería', 'peso_kg' => 5400, 'volumen_m3' => 1.50, 'valor_declarado' => 3200000, 'estado' => 'pendiente'],
+            ['codigo' => 'ENV-2026-004', 'fecha_envio' => '2026-10-22', 'direccion_origen' => 'Calle 5 # 12-34, Cali', 'direccion_destino' => 'Carrera 27 # 18-09, Bucaramanga', 'descripcion_carga' => 'Productos de aseo', 'peso_kg' => 950, 'volumen_m3' => 6.00, 'valor_declarado' => 1200000, 'estado' => 'entregado'],
+            ['codigo' => 'ENV-2026-005', 'fecha_envio' => '2026-10-25', 'direccion_origen' => 'Vía 40 # 65-10, Barranquilla', 'direccion_destino' => 'Bocagrande, Cartagena', 'descripcion_carga' => 'Repuestos automotrices', 'peso_kg' => 2100, 'volumen_m3' => 1.50, 'valor_declarado' => 5600000, 'estado' => 'en_transito'],
+            ['codigo' => 'ENV-2026-006', 'fecha_envio' => '2026-10-28', 'direccion_origen' => 'Calle 100 # 15-32, Bogotá', 'direccion_destino' => 'Carrera 43A # 10-25, Medellín', 'descripcion_carga' => 'Muebles de oficina', 'peso_kg' => 1400, 'volumen_m3' => 5.00, 'valor_declarado' => 2900000, 'estado' => 'cancelado'],
+            ['codigo' => 'ENV-2026-007', 'fecha_envio' => '2026-11-01', 'direccion_origen' => 'Carrera 7 # 63-44, Bogotá', 'direccion_destino' => 'Calle 34 # 6-22, Cali', 'descripcion_carga' => 'Textiles y confecciones', 'peso_kg' => 700, 'volumen_m3' => 6.00, 'valor_declarado' => 1800000, 'estado' => 'pendiente'],
+            ['codigo' => 'ENV-2026-008', 'fecha_envio' => '2026-11-02', 'direccion_origen' => 'Calle 30 # 55-10, Medellín', 'direccion_destino' => 'Carrera 21 # 45-8, Barranquilla', 'descripcion_carga' => 'Bebidas embotelladas', 'peso_kg' => 4100, 'volumen_m3' => 1.80, 'valor_declarado' => 2300000, 'estado' => 'en_transito'],
         ];
 
         foreach ($envios as $i => $data) {

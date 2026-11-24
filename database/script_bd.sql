@@ -108,6 +108,7 @@ CREATE TABLE `envios` (
   `fecha_envio` date NOT NULL,
   `descripcion_carga` text NOT NULL,
   `peso_kg` decimal(10,2) NOT NULL,
+  `volumen_m3` decimal(10,2) NOT NULL DEFAULT '0.00',
   `valor_declarado` decimal(12,2) DEFAULT NULL,
   `estado` varchar(20) NOT NULL DEFAULT 'pendiente',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -127,7 +128,7 @@ CREATE TABLE `envios` (
 
 LOCK TABLES `envios` WRITE;
 /*!40000 ALTER TABLE `envios` DISABLE KEYS */;
-INSERT INTO `envios` VALUES (1,'ENV-2026-001',1,1,1,1,'2026-10-15','Cajas de alimentos no perecederos',3200.00,4500000.00,'entregado','2026-11-03 00:40:52','2026-11-03 00:40:52'),(2,'ENV-2026-002',2,2,2,2,'2026-10-18','Electrodomésticos',1800.00,7800000.00,'en_transito','2026-11-03 00:40:52','2026-11-03 00:40:52'),(3,'ENV-2026-003',3,3,3,3,'2026-10-20','Materiales de ferretería',5400.00,3200000.00,'pendiente','2026-11-03 00:40:52','2026-11-03 00:40:52'),(4,'ENV-2026-004',4,4,4,4,'2026-10-22','Productos de aseo',950.00,1200000.00,'entregado','2026-11-03 00:40:52','2026-11-03 00:40:52'),(5,'ENV-2026-005',5,5,5,5,'2026-10-25','Repuestos automotrices',2100.00,5600000.00,'en_transito','2026-11-03 00:40:52','2026-11-03 00:40:52'),(6,'ENV-2026-006',1,1,1,1,'2026-10-28','Muebles de oficina',1400.00,2900000.00,'cancelado','2026-11-03 00:40:52','2026-11-03 00:40:52'),(7,'ENV-2026-007',2,2,2,2,'2026-11-01','Textiles y confecciones',700.00,1800000.00,'pendiente','2026-11-03 00:40:52','2026-11-03 00:40:52'),(8,'ENV-2026-008',3,3,3,3,'2026-11-02','Bebidas embotelladas',4100.00,2300000.00,'en_transito','2026-11-03 00:40:52','2026-11-03 00:40:52');
+INSERT INTO `envios` VALUES (1,'ENV-2026-001',1,1,1,1,'2026-10-15','Cajas de alimentos no perecederos',3200.00,12.00,4500000.00,'entregado','2026-11-03 00:40:52','2026-11-03 00:40:52'),(2,'ENV-2026-002',2,2,2,2,'2026-10-18','Electrodomésticos',1800.00,8.00,7800000.00,'en_transito','2026-11-03 00:40:52','2026-11-03 00:40:52'),(3,'ENV-2026-003',3,3,3,3,'2026-10-20','Materiales de ferretería',5400.00,1.50,3200000.00,'pendiente','2026-11-03 00:40:52','2026-11-03 00:40:52'),(4,'ENV-2026-004',4,4,4,4,'2026-10-22','Productos de aseo',950.00,6.00,1200000.00,'entregado','2026-11-03 00:40:52','2026-11-03 00:40:52'),(5,'ENV-2026-005',5,5,5,5,'2026-10-25','Repuestos automotrices',2100.00,1.50,5600000.00,'en_transito','2026-11-03 00:40:52','2026-11-03 00:40:52'),(6,'ENV-2026-006',1,1,1,1,'2026-10-28','Muebles de oficina',1400.00,5.00,2900000.00,'cancelado','2026-11-03 00:40:52','2026-11-03 00:40:52'),(7,'ENV-2026-007',2,2,2,2,'2026-11-01','Textiles y confecciones',700.00,6.00,1800000.00,'pendiente','2026-11-03 00:40:52','2026-11-03 00:40:52'),(8,'ENV-2026-008',3,3,3,3,'2026-11-02','Bebidas embotelladas',4100.00,1.80,2300000.00,'en_transito','2026-11-03 00:40:52','2026-11-03 00:40:52');
 /*!40000 ALTER TABLE `envios` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -307,7 +308,7 @@ CREATE TABLE `vehiculos` (
 
 LOCK TABLES `vehiculos` WRITE;
 /*!40000 ALTER TABLE `vehiculos` DISABLE KEYS */;
-INSERT INTO `vehiculos` VALUES (1,'ABC123','Chevrolet','NPR',2021,'Camión',4500.00,'disponible','2026-11-03 00:40:52','2026-11-03 00:40:52'),(2,'DEF456','Hino','Dutro',2022,'Camión',6000.00,'en_ruta','2026-11-03 00:40:52','2026-11-03 00:40:52'),(3,'GHI789','Renault','Kangoo',2020,'Furgón',1500.00,'mantenimiento','2026-11-03 00:40:52','2026-11-03 00:40:52'),(4,'JKL012','Mercedes-Benz','Accelo',2023,'Camión',8000.00,'disponible','2026-11-03 00:40:52','2026-11-03 00:40:52'),(5,'MNO345','Toyota','Hilux',2019,'Camioneta',1000.00,'inactivo','2026-11-03 00:40:52','2026-11-03 00:40:52');
+INSERT INTO `vehiculos` VALUES (1,'ABC123','Chevrolet','NPR',2021,'Camión',18.00,'disponible','2026-11-03 00:40:52','2026-11-03 00:40:52'),(2,'DEF456','Hino','Dutro',2022,'Camión',24.00,'en_ruta','2026-11-03 00:40:52','2026-11-03 00:40:52'),(3,'GHI789','Renault','Kangoo',2020,'Furgón',3.50,'mantenimiento','2026-11-03 00:40:52','2026-11-03 00:40:52'),(4,'JKL012','Mercedes-Benz','Accelo',2023,'Camión',30.00,'disponible','2026-11-03 00:40:52','2026-11-03 00:40:52'),(5,'MNO345','Toyota','Hilux',2019,'Camioneta',2.00,'inactivo','2026-11-03 00:40:52','2026-11-03 00:40:52');
 /*!40000 ALTER TABLE `vehiculos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

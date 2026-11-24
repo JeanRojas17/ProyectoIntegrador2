@@ -46,7 +46,7 @@ class VehiculoRequest extends FormRequest
             'modelo' => 'modelo',
             'anio' => 'año',
             'tipo_vehiculo' => 'tipo de vehículo',
-            'capacidad_carga' => 'capacidad de carga',
+            'capacidad_carga' => 'capacidad de carga (m³)',
             'estado' => 'estado',
         ];
     }

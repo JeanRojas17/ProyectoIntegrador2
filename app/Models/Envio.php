@@ -23,6 +23,7 @@ class Envio extends Model
         'fecha_envio',
         'descripcion_carga',
         'peso_kg',
+        'volumen_m3',
         'valor_declarado',
         'estado',
     ];

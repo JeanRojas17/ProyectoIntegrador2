@@ -45,7 +45,7 @@
                         <th>Marca / Modelo</th>
                         <th>Año</th>
                         <th>Tipo</th>
-                        <th>Capacidad (kg)</th>
+                        <th>Capacidad (m³)</th>
                         <th>Estado</th>
                         <th class="table-actions text-end">Acciones</th>
                     </tr>
@@ -57,7 +57,7 @@
                             <td>{{ $vehiculo->marca }} {{ $vehiculo->modelo }}</td>
                             <td>{{ $vehiculo->anio }}</td>
                             <td>{{ $vehiculo->tipo_vehiculo }}</td>
-                            <td>{{ number_format($vehiculo->capacidad_carga, 2) }}</td>
+                            <td>{{ number_format($vehiculo->capacidad_carga, 2) }} m³</td>
                             <td><span class="badge bg-secondary text-capitalize">{{ str_replace('_', ' ', $vehiculo->estado) }}</span></td>
                             <td class="table-actions text-end">
                                 <a href="{{ route('vehiculos.show', $vehiculo) }}" class="btn btn-sm btn-outline-secondary" title="Ver">

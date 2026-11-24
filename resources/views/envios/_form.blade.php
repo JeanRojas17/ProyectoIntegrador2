@@ -102,6 +102,12 @@
             @error('peso_kg')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
         <div class="col-md-6">
+            <label class="form-label">Volumen (m³)</label>
+            <input type="number" step="0.01" name="volumen_m3" class="form-control @error('volumen_m3') is-invalid @enderror"
+                   value="{{ old('volumen_m3', $envio->volumen_m3 ?? '') }}" required>
+            @error('volumen_m3')<div class="invalid-feedback">{{ $message }}</div>@enderror
+        </div>
+        <div class="col-md-6">
             <label class="form-label">Valor declarado</label>
             <input type="number" step="0.01" name="valor_declarado" class="form-control @error('valor_declarado') is-invalid @enderror"
                    value="{{ old('valor_declarado', $envio->valor_declarado ?? '') }}">
