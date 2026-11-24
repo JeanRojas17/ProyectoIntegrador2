@@ -24,7 +24,7 @@
                        value="{{ request('buscar') }}">
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <select name="estado" class="form-select">
                     <option value="">Todos los estados</option>
                     <option value="pendiente"   {{ request('estado') == 'pendiente'   ? 'selected' : '' }}>Pendiente</option>
@@ -45,11 +45,22 @@
                 </select>
             </div>
 
-            <div class="col-md-auto">
+            <div class="col-md-2">
+                <select name="conductor_id" class="form-select">
+                    <option value="">Todos los conductores</option>
+                    @foreach($conductores as $conductor)
+                        <option value="{{ $conductor->id }}" {{ request('conductor_id') == $conductor->id ? 'selected' : '' }}>
+                            {{ $conductor->nombres }} {{ $conductor->apellidos }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-md-2">
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-funnel"></i> Filtrar
                 </button>
-                @if(request('estado') || request('ruta_id') || request('buscar'))
+                @if(request('estado') || request('ruta_id') || request('conductor_id') || request('buscar'))
                     <a href="{{ route('envios.index') }}" class="btn btn-outline-secondary">
                         Limpiar
                     </a>

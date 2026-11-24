@@ -19,6 +19,7 @@ class EnvioController extends Controller
     $user = $request->user();
     $estado = $request->input('estado');
     $rutaId = $request->input('ruta_id');
+    $conductorId = $request->input('conductor_id');
     $buscar = $request->input('buscar');
 
     $envios = Envio::with(['cliente', 'conductor', 'vehiculo', 'ruta'])
@@ -26,6 +27,7 @@ class EnvioController extends Controller
         ->when($user->esCliente(), fn ($q) => $q->where('cliente_id', $user->cliente?->id ?? 0))
         ->when($estado, fn ($q, $estado) => $q->where('estado', $estado))
         ->when($rutaId, fn ($q, $rutaId) => $q->where('ruta_id', $rutaId))
+        ->when($conductorId, fn ($q, $conductorId) => $q->where('conductor_id', $conductorId))
         ->when($buscar, function ($query, $buscar) {
             $query->where(function ($q) use ($buscar) {
                 $q->where('codigo', 'like', "%{$buscar}%")
@@ -38,10 +40,11 @@ class EnvioController extends Controller
         ->paginate(10)
         ->withQueryString();
 
-    // Pasar las rutas para el select del filtro
-    $rutas = \App\Models\Ruta::orderBy('origen')->get();
+    // Pasar las rutas y conductores para los selects de los filtros
+    $rutas = Ruta::orderBy('origen')->get();
+    $conductores = Conductor::orderBy('nombres')->get();
 
-    return view('envios.index', compact('envios', 'rutas'));
+    return view('envios.index', compact('envios', 'rutas', 'conductores'));
 }
 
     public function create(): View
