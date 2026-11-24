@@ -38,6 +38,9 @@
                         <dt class="col-sm-4">Peso</dt>
                         <dd class="col-sm-8">{{ number_format($envio->peso_kg, 2) }} kg</dd>
 
+                        <dt class="col-sm-4">Volumen</dt>
+                        <dd class="col-sm-8">{{ number_format($envio->volumen_m3, 2) }} m³</dd>
+
                         <dt class="col-sm-4">Valor declarado</dt>
                         <dd class="col-sm-8">{{ $envio->valor_declarado ? '$' . number_format($envio->valor_declarado, 2) : '—' }}</dd>
 

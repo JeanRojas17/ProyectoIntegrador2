@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Envio;
+use App\Models\Vehiculo;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class EnvioRequest extends FormRequest
 {
@@ -28,8 +31,40 @@ class EnvioRequest extends FormRequest
             'fecha_envio' => ['required', 'date'],
             'descripcion_carga' => ['required', 'string', 'max:1000'],
             'peso_kg' => ['required', 'numeric', 'min:0.01'],
+            'volumen_m3' => ['required', 'numeric', 'min:0.01'],
             'valor_declarado' => ['nullable', 'numeric', 'min:0'],
             'estado' => ['required', Rule::in(['pendiente', 'en_transito', 'entregado', 'cancelado'])],
+        ];
+    }
+
+    public function after(): array
+    {
+        return [
+            function (Validator $validator): void {
+                if ($validator->errors()->isNotEmpty() || ! $this->filled(['vehiculo_id', 'volumen_m3'])) {
+                    return;
+                }
+
+                $vehiculo = Vehiculo::find($this->input('vehiculo_id'));
+
+                if (! $vehiculo) {
+                    return;
+                }
+
+                $volumenAsignado = Envio::where('vehiculo_id', $vehiculo->id)
+                    ->whereIn('estado', ['pendiente', 'en_transito'])
+                    ->when($this->route('envio'), fn ($query, $envio) => $query->whereKeyNot($envio->id))
+                    ->sum('volumen_m3');
+
+                $disponible = (float) $vehiculo->capacidad_carga - (float) $volumenAsignado;
+
+                if ((float) $this->input('volumen_m3') > $disponible) {
+                    $validator->errors()->add(
+                        'volumen_m3',
+                        'El volumen supera la capacidad disponible del vehículo ('.number_format(max($disponible, 0), 2, ',', '.').' m³).'
+                    );
+                }
+            },
         ];
     }
 
@@ -56,6 +91,7 @@ class EnvioRequest extends FormRequest
             'fecha_envio' => 'fecha de envío',
             'descripcion_carga' => 'descripción de la carga',
             'peso_kg' => 'peso (kg)',
+            'volumen_m3' => 'volumen (m³)',
             'valor_declarado' => 'valor declarado',
             'estado' => 'estado',
         ];

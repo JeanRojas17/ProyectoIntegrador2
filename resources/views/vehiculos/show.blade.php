@@ -29,7 +29,7 @@
                 <dd class="col-sm-9">{{ $vehiculo->tipo_vehiculo }}</dd>
 
                 <dt class="col-sm-3">Capacidad de carga</dt>
-                <dd class="col-sm-9">{{ number_format($vehiculo->capacidad_carga, 2) }} kg</dd>
+                <dd class="col-sm-9">{{ number_format($vehiculo->capacidad_carga, 2) }} m³</dd>
 
                 <dt class="col-sm-3">Estado</dt>
                 <dd class="col-sm-9 text-capitalize">{{ str_replace('_', ' ', $vehiculo->estado) }}</dd>

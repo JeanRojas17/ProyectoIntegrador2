@@ -38,7 +38,7 @@
             @error('tipo_vehiculo')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
         <div class="col-md-4">
-            <label class="form-label">Capacidad de carga (kg)</label>
+            <label class="form-label">Capacidad de carga (m³)</label>
             <input type="number" step="0.01" name="capacidad_carga" class="form-control @error('capacidad_carga') is-invalid @enderror"
                    value="{{ old('capacidad_carga', $vehiculo->capacidad_carga ?? '') }}" required>
             @error('capacidad_carga')<div class="invalid-feedback">{{ $message }}</div>@enderror
